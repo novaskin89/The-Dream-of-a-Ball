@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     bool hasplayed2Hp = false;
     bool hasplayed1Hp = false;
     bool hasFallen = false;
+    public AudioClip DamageSound;
 
     // Use this for initialization
     void Start()
@@ -95,7 +96,6 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive(false);
@@ -113,20 +113,9 @@ public class PlayerController : MonoBehaviour
             lives = lives - 1;
             SetLivesText();
             health = 3;
-        }
-
-        //if (other.gameObject.CompareTag("FallingTrigger"))
-        {
-            HasFallen();
-
-        }
-
-
-
-
-
+            Invoke("PlayerRespawn()", 5);
+        }             
     }
-
 
     void SetPickUpText()
 
@@ -139,20 +128,17 @@ public class PlayerController : MonoBehaviour
     }
 
     void SetLivesText()
-
     {
         LivesText.text = "Lives: " + lives.ToString();
-
     }
+
     void damagesound2Hp()
-
     {
-
         if (hasplayed2Hp == false)
         {
             AudioSource audio = GetComponent<AudioSource>();
+            audio.clip = DamageSound;
             audio.Play();
-            audio.PlayDelayed(44100);
             hasplayed2Hp = true;
         }
     }
@@ -164,8 +150,8 @@ public class PlayerController : MonoBehaviour
         if (hasplayed1Hp == false)
         {
             AudioSource audio = GetComponent<AudioSource>();
+            audio.clip = DamageSound;
             audio.Play();
-            audio.PlayDelayed(44100);
             hasplayed1Hp = true;
         }
     }
@@ -178,7 +164,7 @@ public class PlayerController : MonoBehaviour
         // If the object we hit is the enemy
         if (c.gameObject.tag == "Enemy")
         {
-            // Calculate Angle Between the collision point and the player
+            // Calculate Angle Between the collision point and the p2\2layer
             Vector3 dir = c.contacts[0].point - transform.position;
             // We then get the opposite (-Vector3) and normalize it
             dir = -dir.normalized;
@@ -186,17 +172,13 @@ public class PlayerController : MonoBehaviour
             // This will push back the player
             GetComponent<Rigidbody>().AddForce(dir * force);
         }
-    }
-    void HasFallen()
 
+       
+    }
+
+    void PlayerRespawn()
     {
-        //if (hasFallen == false)
-        //{
-        //    AudioSource audio = GetComponent<AudioSource>();
-        //    audio.Play();
-        //    audio.PlayDelayed(44100);
-        //    hasFallen = true;
-        //}
+        PlayerTransform.transform.position = RespawnPoint.transform.position;
     }
 }
 
