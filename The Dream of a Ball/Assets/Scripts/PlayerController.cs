@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Text PickUpText;
     public Text LivesText;
-    private int count;
+    [HideInInspector] public int count;
     public int lives;
-    public int health;
+    [Header("Health Settings")] public int health;
     public GameObject Player;
     public Color fullHealth;
     public Color midHealth;
@@ -112,9 +112,10 @@ public class PlayerController : MonoBehaviour
         {
             lives = lives - 1;
             SetLivesText();
+            health = 3;
         }
 
-        if (other.gameObject.CompareTag("FallingTrigger"))
+        //if (other.gameObject.CompareTag("FallingTrigger"))
         {
             HasFallen();
 
@@ -169,16 +170,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter(Collision c)
+    {
+        // force is how forcefully we will push the player away from the enemy.
+        float force = 400;
+
+        // If the object we hit is the enemy
+        if (c.gameObject.tag == "Enemy")
+        {
+            // Calculate Angle Between the collision point and the player
+            Vector3 dir = c.contacts[0].point - transform.position;
+            // We then get the opposite (-Vector3) and normalize it
+            dir = -dir.normalized;
+            // And finally we add force in the direction of dir and multiply it by force. 
+            // This will push back the player
+            GetComponent<Rigidbody>().AddForce(dir * force);
+        }
+    }
     void HasFallen()
 
     {
-        if (hasFallen == false)
-        {
-            AudioSource audio = GetComponent<AudioSource>();
-            audio.Play();
-            audio.PlayDelayed(44100);
-            hasFallen = true;
-        }
+        //if (hasFallen == false)
+        //{
+        //    AudioSource audio = GetComponent<AudioSource>();
+        //    audio.Play();
+        //    audio.PlayDelayed(44100);
+        //    hasFallen = true;
+        //}
     }
 }
 

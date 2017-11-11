@@ -3,43 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OpenGate : MonoBehaviour
-{
 
-    public float speed = 1.87f;
-    private int count;
+   
+{
+    public GameObject Gate1;
+    public PlayerController playercontroller;
+    private Animator _animator;
+
 
     // Use this for initialization
     void Start()
     {
-        count = 0;
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //(Vector3.up * speed * Time.deltaTime);
-       // transform.Translate(0, 0, 0);
-       
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("PickUp"))
+        if (playercontroller.count >= 8)
         {
-            other.gameObject.SetActive(false);
-            count = count + 1;
-            Debug.Log ("PickUp "+ count);
+
         }
     }
-    void SetCountText()
 
-    {
 
-        if (count >= 2)
-        {
-            transform.Translate(0, -Time.deltaTime, 0, Space.World);
-            //  Vector3.up (3 * Time.deltaTime);
-        }
-    }
+
 }
 
