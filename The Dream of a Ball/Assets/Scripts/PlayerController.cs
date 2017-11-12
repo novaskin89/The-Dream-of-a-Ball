@@ -26,9 +26,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform PlayerTransform;
     bool hasplayed2Hp = false;
     bool hasplayed1Hp = false;
+    bool isDead = false;
     public AudioClip DamageSound;
     public Transform pauseCanvas;
-    
+
     // Use this for initialization
     void Start()
     {
@@ -43,20 +44,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (pauseCanvas.gameObject.activeInHierarchy == false)
-            {
-                pauseCanvas.gameObject.SetActive(true);
-                Time.timeScale = 0f;
-            }
-            else
-            {
-                pauseCanvas.gameObject.SetActive(false);
-                Time.timeScale = 1f;
-            }
-        }
-
         if (health == 3)
         {
             Time.timeScale = 1;
@@ -78,10 +65,15 @@ public class PlayerController : MonoBehaviour
 
         if (health == 0)
         {
-            //Time.timeScale = 0;
-            GetComponent<Renderer>().material.color = death;
-            DisableRagdoll();            
-            Invoke("PlayerRespawn", 1);
+            isDead = true;
+
+            if (isDead == true)
+            {
+                isDead = false;
+                GetComponent<Renderer>().material.color = death;
+                DisableRagdoll();
+                Invoke("PlayerRespawn", 1);
+            }
         }
     }
 
