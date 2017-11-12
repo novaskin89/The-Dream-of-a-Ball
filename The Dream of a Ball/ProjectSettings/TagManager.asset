@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - DeathTrigger
   - FallingTrigger
+  - RPUpdate
+  - RPUpdate2
+  - RPUpdate3
   layers:
   - Default
   - TransparentFX

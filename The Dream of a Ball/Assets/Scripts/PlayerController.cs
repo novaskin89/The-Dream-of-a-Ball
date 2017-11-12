@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 
 {
 
-    private Rigidbody rb;
+    public Rigidbody rb;
     public float speed;
     public Text PickUpText;
     public Text LivesText;
@@ -18,13 +18,17 @@ public class PlayerController : MonoBehaviour
     public Color fullHealth;
     public Color midHealth;
     public Color LowHealth;
+    public Color death;
     [SerializeField] private Transform RespawnPoint;
+    [SerializeField] private Transform RespawnPoint2;
+    [SerializeField] private Transform RespawnPoint3;
+    [SerializeField] private Transform RespawnPoint4;
     [SerializeField] private Transform PlayerTransform;
     bool hasplayed2Hp = false;
     bool hasplayed1Hp = false;
-    bool hasFallen = false;
     public AudioClip DamageSound;
-
+    public Transform pauseCanvas;
+    
     // Use this for initialization
     void Start()
     {
@@ -39,9 +43,25 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseCanvas.gameObject.activeInHierarchy == false)
+            {
+                pauseCanvas.gameObject.SetActive(true);
+                Time.timeScale = 0f;
+            }
+            else
+            {
+                pauseCanvas.gameObject.SetActive(false);
+                Time.timeScale = 1f;
+            }
+        }
+
         if (health == 3)
         {
+            Time.timeScale = 1;
             GetComponent<Renderer>().material.color = fullHealth;
+            EnableRagdoll();
         }
 
         if (health == 2)
@@ -58,41 +78,20 @@ public class PlayerController : MonoBehaviour
 
         if (health == 0)
         {
-            PlayerTransform.transform.position = RespawnPoint.transform.position;
-            health = 3;
-            lives = lives - 1;
-            hasplayed2Hp = false;
-            hasplayed1Hp = false;
-            bool hasFallen = false;
-            SetLivesText();
-        }
-
-        if (lives == 2)
-        {
-            hasFallen = false;
-        }
-
-        if (lives == 1)
-        {
-            hasFallen = false;
-        }
-
-        if (lives == 0)
-        {
-            hasFallen = false;
+            //Time.timeScale = 0;
+            GetComponent<Renderer>().material.color = death;
+            DisableRagdoll();            
+            Invoke("PlayerRespawn", 1);
         }
     }
-
 
     void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical);
-
         rb.AddForce(movement * speed);
     }
-
 
     void OnTriggerEnter(Collider other)
     {
@@ -110,15 +109,29 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("DeathTrigger"))
         {
-            lives = lives - 1;
             SetLivesText();
             health = 3;
-            Invoke("PlayerRespawn()", 5);
-        }             
+            DisableRagdoll();
+            Invoke("PlayerRespawn", 0.5f);
+        }
+
+        if (other.gameObject.CompareTag("RPUpdate"))
+        {
+            RespawnPoint.transform.position = RespawnPoint2.transform.position;
+        }
+
+        if (other.gameObject.CompareTag("RPUpdate2"))
+        {
+            RespawnPoint.transform.position = RespawnPoint3.transform.position;
+        }
+
+        if (other.gameObject.CompareTag("RPUpdate3"))
+        {
+            RespawnPoint.transform.position = RespawnPoint4.transform.position;
+        }
     }
 
     void SetPickUpText()
-
     {
         PickUpText.text = "PickUp: " + count.ToString() + "/100";
         if (count >= 9)
@@ -144,9 +157,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void damagesound1Hp()
-
     {
-
         if (hasplayed1Hp == false)
         {
             AudioSource audio = GetComponent<AudioSource>();
@@ -161,7 +172,7 @@ public class PlayerController : MonoBehaviour
         // force is how forcefully we will push the player away from the enemy.
         float force = 400;
 
-        // If the object we hit is the enemy
+        // If the object we hit is the Enemy
         if (c.gameObject.tag == "Enemy")
         {
             // Calculate Angle Between the collision point and the p2\2layer
@@ -172,13 +183,29 @@ public class PlayerController : MonoBehaviour
             // This will push back the player
             GetComponent<Rigidbody>().AddForce(dir * force);
         }
-
-       
     }
 
     void PlayerRespawn()
     {
         PlayerTransform.transform.position = RespawnPoint.transform.position;
+        health = 3;
+        hasplayed2Hp = false;
+        hasplayed1Hp = false;
+        EnableRagdoll();
+        lives = lives - 1;
+        SetLivesText();
+    }
+
+    void DisableRagdoll()
+    {
+        rb.isKinematic = true;
+        rb.detectCollisions = false;
+    }
+
+    void EnableRagdoll()
+    {
+        rb.isKinematic = false;
+        rb.detectCollisions = true;
     }
 }
 
