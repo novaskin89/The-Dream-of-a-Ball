@@ -17,18 +17,23 @@ public class PlayerController : MonoBehaviour
     public GameObject Player;
     public Color fullHealth;
     public Color midHealth;
-    public Color LowHealth;
+    public Color lowHealth;
     public Color death;
-    [SerializeField] private Transform RespawnPoint;
-    [SerializeField] private Transform RespawnPoint2;
-    [SerializeField] private Transform RespawnPoint3;
-    [SerializeField] private Transform RespawnPoint4;
+    [SerializeField] private Transform respawnPoint;
+    [SerializeField] private Transform respawnPoint2;
+    [SerializeField] private Transform respawnPoint3;
+    [SerializeField] private Transform respawnPoint4;
     [SerializeField] private Transform PlayerTransform;
-    bool hasplayed2Hp = false;
-    bool hasplayed1Hp = false;
+    bool hasPlayed2Hp = false;
+    bool hasPlayed1Hp = false;
+    bool hasPlayedfallingSound = false;
+    public bool hasPlayeddeath = false;
     bool isDead = false;
-    public AudioClip DamageSound;
+    public AudioClip damageSound;
+    public AudioClip fallingBall;
+    public AudioClip deathSound;
     public Transform pauseCanvas;
+
 
     // Use this for initialization
     void Start()
@@ -54,13 +59,13 @@ public class PlayerController : MonoBehaviour
         if (health == 2)
         {
             GetComponent<Renderer>().material.color = midHealth;
-            damagesound2Hp();
+            Damagesound2Hp();
         }
 
         if (health == 1)
         {
-            GetComponent<Renderer>().material.color = LowHealth;
-            damagesound1Hp();
+            GetComponent<Renderer>().material.color = lowHealth;
+            Damagesound1Hp();
         }
 
         if (health == 0)
@@ -73,6 +78,7 @@ public class PlayerController : MonoBehaviour
                 GetComponent<Renderer>().material.color = death;
                 DisableRagdoll();
                 Invoke("PlayerRespawn", 1);
+                DieSound();
             }
         }
     }
@@ -107,19 +113,31 @@ public class PlayerController : MonoBehaviour
             Invoke("PlayerRespawn", 0.5f);
         }
 
+        if (other.gameObject.CompareTag("FallingTrigger"))
+        {
+            if (hasPlayedfallingSound == false)
+            {
+                AudioSource audio = GetComponent<AudioSource>();
+                audio.clip = fallingBall;
+                audio.Play();
+                hasPlayedfallingSound = true;
+                hasPlayedfallingSound = false;
+            }
+        }
+
         if (other.gameObject.CompareTag("RPUpdate"))
         {
-            RespawnPoint.transform.position = RespawnPoint2.transform.position;
+            respawnPoint.transform.position = respawnPoint2.transform.position;
         }
 
         if (other.gameObject.CompareTag("RPUpdate2"))
         {
-            RespawnPoint.transform.position = RespawnPoint3.transform.position;
+            respawnPoint.transform.position = respawnPoint3.transform.position;
         }
 
         if (other.gameObject.CompareTag("RPUpdate3"))
         {
-            RespawnPoint.transform.position = RespawnPoint4.transform.position;
+            respawnPoint.transform.position = respawnPoint4.transform.position;
         }
     }
 
@@ -137,28 +155,39 @@ public class PlayerController : MonoBehaviour
         LivesText.text = "Lives: " + lives.ToString();
     }
 
-    void damagesound2Hp()
+    void Damagesound2Hp()
     {
-        if (hasplayed2Hp == false)
+        if (hasPlayed2Hp == false)
         {
             AudioSource audio = GetComponent<AudioSource>();
-            audio.clip = DamageSound;
+            audio.clip = damageSound;
             audio.Play();
-            hasplayed2Hp = true;
+            hasPlayed2Hp = true;
         }
     }
 
-    void damagesound1Hp()
+    void Damagesound1Hp()
     {
-        if (hasplayed1Hp == false)
+        if (hasPlayed1Hp == false)
         {
             AudioSource audio = GetComponent<AudioSource>();
-            audio.clip = DamageSound;
+            audio.clip = damageSound;
             audio.Play();
-            hasplayed1Hp = true;
+            hasPlayed1Hp = true;
         }
     }
 
+    void DieSound()
+    {
+        if (hasPlayeddeath == false)
+        {
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.clip = deathSound;
+            audio.Play();
+            hasPlayeddeath = true;
+            hasPlayeddeath = false;
+        }
+    }
     void OnCollisionEnter(Collision c)
     {
         // force is how forcefully we will push the player away from the enemy.
@@ -179,10 +208,10 @@ public class PlayerController : MonoBehaviour
 
     void PlayerRespawn()
     {
-        PlayerTransform.transform.position = RespawnPoint.transform.position;
+        PlayerTransform.transform.position = respawnPoint.transform.position;
         health = 3;
-        hasplayed2Hp = false;
-        hasplayed1Hp = false;
+        hasPlayed2Hp = false;
+        hasPlayed1Hp = false;
         EnableRagdoll();
         lives = lives - 1;
         SetLivesText();
