@@ -49,46 +49,86 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (health == 3)
+        switch (health)
         {
-            Time.timeScale = 1;
-            GetComponent<Renderer>().material.color = fullHealth;
-            EnableRagdoll();
-        }
-
-        if (health == 2)
-        {
-            GetComponent<Renderer>().material.color = midHealth;
-            Damagesound2Hp();
-        }
-
-        if (health == 1)
-        {
-            GetComponent<Renderer>().material.color = lowHealth;
-            Damagesound1Hp();
-        }
-
-        if (health == 0)
-        {
-            isDead = true;
-
-            if (isDead == true)
-            {
+            case 3:
                 isDead = false;
-                GetComponent<Renderer>().material.color = death;
-                DisableRagdoll();
-                Invoke("PlayerRespawn", 1);
-                DieSound();
-            }
+                GetComponent<Renderer>().material.color = fullHealth;
+                EnableRagdoll();
+                break;
+
+            case 2:
+                GetComponent<Renderer>().material.color = midHealth;
+                Damagesound2Hp();
+                break;
+
+            case 1:
+                GetComponent<Renderer>().material.color = lowHealth;
+                Damagesound1Hp();
+                break;
+
+            case 0:
+
+                if (isDead == false)
+                {
+                    isDead = true;
+                    GetComponent<Renderer>().material.color = death;
+                    DisableRagdoll();
+                    Invoke("PlayerRespawn", 1.5f);
+                    DieSound();
+                }
+                break;
+
+            default:
+                break;
         }
+
+        //if (health == 3)
+        //{
+        //    isDead = false;
+        //    // stefano: pausa non funzionava perche ci stava questa linea qui sotto! 
+        //    //Time.timeScale = 1;
+        //    GetComponent<Renderer>().material.color = fullHealth;
+        //    EnableRagdoll();
+        //}
+
+        //if (health == 2)
+        //{
+        //    GetComponent<Renderer>().material.color = midHealth;
+        //    Damagesound2Hp();
+        //}
+
+        //if (health == 1)
+        //{
+        //    GetComponent<Renderer>().material.color = lowHealth;
+        //    Damagesound1Hp();
+        //}
+
+        //if (health == 0)
+        //{
+        //    // stefano: pausa non funzionava per colpa dei booleans, guarda la mia modifica per capire come ho fatto
+        //    //ci sei andato vicino comunque
+        //    // il boolean "isDead" lo resetto a falso nella linea 54
+        //    if (isDead == false)
+        //    {
+        //        isDead = true;
+        //        GetComponent<Renderer>().material.color = death;
+        //        DisableRagdoll();
+        //        Invoke("PlayerRespawn", 1.5f);
+        //        DieSound();
+        //    }
+        //}
     }
 
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical);
-        rb.AddForce(movement * speed);
+        if (Time.timeScale == 1)
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+            Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical);
+            rb.AddForce(movement * speed);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -144,10 +184,6 @@ public class PlayerController : MonoBehaviour
     void SetPickUpText()
     {
         PickUpText.text = "PickUp: " + count.ToString() + "/100";
-        if (count >= 9)
-        {
-
-        }
     }
 
     void SetLivesText()
@@ -229,4 +265,3 @@ public class PlayerController : MonoBehaviour
         rb.detectCollisions = true;
     }
 }
-
