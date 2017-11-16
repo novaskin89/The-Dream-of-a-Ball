@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    public int Y;
-    public int Z;
-    public int X;
+    public float Y;
+    public float Z;
+    public float X;
     // Use this for initialization
     void Start()
     {

@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
         //    }
         //}
     }
-
+    
     void FixedUpdate()
     {
         if (Time.timeScale == 1)

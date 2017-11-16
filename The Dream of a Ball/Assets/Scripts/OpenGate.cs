@@ -7,7 +7,7 @@ public class OpenGate : MonoBehaviour
 
 
 {
-
+    
     public PlayerController playercontroller;
     private PlayableDirector playableDirector;
     // Use this for initialization

@@ -5,6 +5,7 @@ using UnityEngine;
 public class InputScript : MonoBehaviour
 {
     private EnumExample enumExample;
+   
 
     // Use this for initialization
     void Awake()
