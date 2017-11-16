@@ -11,15 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 1890111309, guid: 7668179ede524d6396c8b7d84461ea29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeInFrames: 1
-  timeAreaShownRange: {x: -0.093023255, y: 9.906977}
+  timeInFrames: 0
+  timeAreaShownRange: {x: -0.09208103, y: 9.907919}
   showAudioWaveform: 1
   trackHeight: 30
   trackScale: 1
   playRangeEnabled: 0
   timeAreaPlayRange: {x: 3.4028235e+38, y: 3.4028235e+38}
   m_Keys:
-  - {fileID: 114065584413237498, guid: e03c71bf131ca4149a0550710feaddc7, type: 2}
+  - {fileID: 114819495297072278, guid: e03c71bf131ca4149a0550710feaddc7, type: 2}
   m_Vals:
   - collapsed: 0
     showInlineCurves: 0

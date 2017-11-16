@@ -14,19 +14,19 @@ public class Ai : MonoBehaviour
         switch (decision)
         {
             case 1:
-                Debug.Log("Decisione 1");
+                //Debug.Log("Decisione 1");
                 break;
 
             case 5:
-                Debug.Log("Decisione 5");
+               // Debug.Log("Decisione 5");
                 break;
 
             case 22:
-                Debug.Log("Decisione 22");
+                //Debug.Log("Decisione 22");
                 break;
 
             case 556:
-                Debug.Log("Decisione 556");
+               // Debug.Log("Decisione 556");
                 break;
                 
             default:
