@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     bool hasPlayedfallingSound = false;
     public bool hasPlayeddeath = false;
     bool isDead = false;
+    public bool gameOver = false;
     public AudioClip damageSound;
     public AudioClip fallingBall;
     public AudioClip deathSound;
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
         count = 0;
         SetPickUpText();
         health = 3;
-        lives = 3;
+        lives = 1;
     }
 
     // Update is called once per frames
@@ -119,9 +120,15 @@ public class PlayerController : MonoBehaviour
         //    }
         //}
     }
-    
+
     void FixedUpdate()
     {
+
+        if (lives == 0)
+        {
+            gameOver = true;
+        }
+
         if (Time.timeScale == 1)
         {
             float moveHorizontal = Input.GetAxis("Horizontal");

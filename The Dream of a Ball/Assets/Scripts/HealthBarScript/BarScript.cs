@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class BarScript : MonoBehaviour
 {
-    [SerializeField] private float fillAmount;
     [SerializeField] private GameObject boss;
-    public float MaxValue { get; set; }
     public int BossHealth = 100;
     public int DamageToBoss = 1;
     public Material fullHealth;
     public Material lowHealth;
     public Renderer rend;
+    public bool lerpColors = true;
     // Use this for initialization
     void Start()
     {
         rend = GetComponent<Renderer>();
         rend.material = fullHealth;
+
+        if (lerpColors)
+        {
+            rend.material = fullHealth;
+        }
     }
 
     // Update is called once per frame
@@ -27,18 +31,19 @@ public class BarScript : MonoBehaviour
 
         {
             BossHealth = BossHealth - DamageToBoss;
-            Debug.Log("Boss Healt" + BossHealth);
-            rend.material.Lerp(lowHealth, fullHealth, BossHealth*Time.deltaTime);
-
         }
-        //HealthPool();
 
+        if (Input.GetKeyDown(KeyCode.W))
+
+        {
+            BossHealth = BossHealth + DamageToBoss;
+        }
+
+        if (lerpColors)
+        {
+            Debug.Log("Boss Healt" + BossHealth);
+            rend.material.Lerp(lowHealth, fullHealth, BossHealth * Time.deltaTime);
+        }
 
     }
-    //private void HealthPool()
-    //{
-    //    GetComponent<Renderer>().material.color = fillAmount;
-    //}
-
-
 }
