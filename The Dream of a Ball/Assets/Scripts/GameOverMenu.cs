@@ -19,13 +19,8 @@ public class GameOverMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameOverCanvas.gameObject.activeInHierarchy == false)
+        if (gameOverCanvas.gameObject.activeInHierarchy == true)
         {
-            Time.timeScale = 1;
-        }
-        else
-        {
-            gameOverCanvas.gameObject.SetActive(true);
             Time.timeScale = 0;
         }
 

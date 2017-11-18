@@ -7,6 +7,7 @@ public class OrangeSphere : MonoBehaviour
 
     public PlayerController playerController;
     public BarScript boss;
+
     public Transform bossSoul;
     public float speed = 1f;
     // Use this for initialization
@@ -19,7 +20,7 @@ public class OrangeSphere : MonoBehaviour
     void Update()
     {
         float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(bossSoul.position, bossSoul.position, step);
+        transform.position = Vector3.MoveTowards(transform.position, bossSoul.position, step);
     }
 
     void OnTriggerEnter(Collider other)
