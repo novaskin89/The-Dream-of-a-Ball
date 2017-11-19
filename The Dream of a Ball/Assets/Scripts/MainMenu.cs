@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class Mainmenu : MonoBehaviour
 
 {
-    public string nuovoNome = "davide";
-    public GameObject titolo;
     // Use this for initialization
     void Start()
     {
@@ -18,11 +16,10 @@ public class Mainmenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        titolo.GetComponent<Text>().text = nuovoNome;
+
     }
     public void StartGame(string Level1)
     {
-
         SceneManager.LoadScene(Level1);
     }
 }

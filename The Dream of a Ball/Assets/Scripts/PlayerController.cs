@@ -26,11 +26,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform PlayerTransform;
     bool hasPlayed2Hp = false;
     bool hasPlayed1Hp = false;
+    bool hasPlayedPickUp = false;
     bool hasPlayedfallingSound = false;
     public bool hasPlayeddeath = false;
     bool isDead = false;
     public bool gameOver = false;
     public AudioClip damageSound;
+    public AudioClip pickUp;
     public AudioClip fallingBall;
     public AudioClip deathSound;
     public Transform pauseCanvas;
@@ -39,12 +41,11 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        rb = GetComponent<Rigidbody>(); 
+        rb = GetComponent<Rigidbody>();
         health = 3;
         lives = 1;
         count = PlayerPrefs.GetInt("PickUpCollected");
         SetPickUpText();
-        Debug.Log("PlayerControllerPickUpCollected " + PlayerPrefs.GetInt("PickUpCollected"));
     }
 
     // Update is called once per frames
@@ -142,8 +143,14 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("PickUp"))
-        { 
-
+        {
+            if (hasPlayedPickUp == false)
+            {
+                AudioSource audio = GetComponent<AudioSource>();
+                audio.clip = pickUp;
+                audio.Play();
+                hasPlayed2Hp = true;
+            }
             other.gameObject.SetActive(false);
             count = count + 1;
             SetPickUpText();

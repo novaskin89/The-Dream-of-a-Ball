@@ -43,6 +43,5 @@ public class BarScript : MonoBehaviour
         {
             rend.material.Lerp(lowHealth, fullHealth, BossHealth * Time.deltaTime);
         }
-
     }
 }
