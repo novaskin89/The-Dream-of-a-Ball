@@ -9,7 +9,7 @@ public class ButtonManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-      
+        Debug.Log("ButtonManagerPickUpCollected " + PlayerPrefs.GetInt("PickUpCollected"));
     }
 
     // Update is called once per frame
@@ -18,11 +18,16 @@ public class ButtonManager : MonoBehaviour
 
     }
 
-    public void PlayGameButton(string Level1)
+    public void NewGameButton(string Level1)
     {
+        PlayerPrefs.SetInt("PickUpCollected", 0);
         SceneManager.LoadScene(Level1);
     }
 
+    public void ContinueButton(string Level1)
+    {
+        SceneManager.LoadScene(Level1);
+    }
     public void ExitGame()
     {
         Application.Quit();

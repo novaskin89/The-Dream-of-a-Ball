@@ -41,7 +41,6 @@ public class BarScript : MonoBehaviour
 
         if (lerpColors)
         {
-            Debug.Log("Boss Healt" + BossHealth);
             rend.material.Lerp(lowHealth, fullHealth, BossHealth * Time.deltaTime);
         }
 

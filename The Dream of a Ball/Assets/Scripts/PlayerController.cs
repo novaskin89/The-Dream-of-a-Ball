@@ -39,11 +39,12 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        count = 0;
-        SetPickUpText();
+        rb = GetComponent<Rigidbody>(); 
         health = 3;
         lives = 1;
+        count = PlayerPrefs.GetInt("PickUpCollected");
+        SetPickUpText();
+        Debug.Log("PlayerControllerPickUpCollected " + PlayerPrefs.GetInt("PickUpCollected"));
     }
 
     // Update is called once per frames

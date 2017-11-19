@@ -12,6 +12,7 @@ TagManager:
   - RPUpdate2
   - RPUpdate3
   - BossSoul
+  - BossPlane
   layers:
   - Default
   - TransparentFX
