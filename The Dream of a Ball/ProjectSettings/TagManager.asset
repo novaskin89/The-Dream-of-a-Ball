@@ -13,6 +13,7 @@ TagManager:
   - RPUpdate3
   - BossSoul
   - BossPlane
+  - OrangeSphere
   layers:
   - Default
   - TransparentFX

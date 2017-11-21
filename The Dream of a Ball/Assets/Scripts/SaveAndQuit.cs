@@ -8,10 +8,13 @@ public class SaveAndQuit : MonoBehaviour
 {
     public PlayerController playerController;
     int pickupCollected;
+    int LivesLeft;
+    int healtLeft;
+    int lives;
     // Use this for initialization
     void Start()
     {
-        Debug.Log("SaveAndQuitPickUpCollected " + PlayerPrefs.GetInt("PickUpCollected"));
+       
     }
 
     // Update is called once per frame
@@ -25,6 +28,8 @@ public class SaveAndQuit : MonoBehaviour
         if (Quit)
         {
             PlayerPrefs.SetInt("PickUpCollected", playerController.count);
+            PlayerPrefs.SetInt("livesLeft", playerController.lives);
+            PlayerPrefs.SetInt("healthLeft", playerController.health);
             Time.timeScale = 1;
             SceneManager.LoadScene("MainMenu");
         }

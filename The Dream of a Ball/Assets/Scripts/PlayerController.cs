@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public int lives;
     [Header("Health Settings")] public int health;
     public GameObject Player;
+    public OrangeSphere orangeSphere;
     public Color fullHealth;
     public Color midHealth;
     public Color lowHealth;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     bool hasPlayed1Hp = false;
     bool hasPlayedPickUp = false;
     bool hasPlayedfallingSound = false;
+    private bool invulnerable = false;
     public bool hasPlayeddeath = false;
     bool isDead = false;
     public bool gameOver = false;
@@ -45,7 +47,10 @@ public class PlayerController : MonoBehaviour
         health = 3;
         lives = 1;
         count = PlayerPrefs.GetInt("PickUpCollected");
+        lives = PlayerPrefs.GetInt("livesLeft");
+        health = PlayerPrefs.GetInt("healthLeft");
         SetPickUpText();
+        SetLivesText();
     }
 
     // Update is called once per frames
@@ -140,7 +145,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    IEnumerator OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("PickUp"))
         {
@@ -155,10 +160,15 @@ public class PlayerController : MonoBehaviour
             count = count + 1;
             SetPickUpText();
         }
-
-        if (other.gameObject.CompareTag("Enemy"))
+        if (!invulnerable)
         {
-            health = health - 1;
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                health = health - 1;
+                invulnerable = true;
+                yield return new WaitForSeconds(1);  // wait until unpausing damage
+                invulnerable = false;                     // unpause damage 
+            }
         }
 
         if (other.gameObject.CompareTag("DeathTrigger"))
@@ -179,6 +189,11 @@ public class PlayerController : MonoBehaviour
                 hasPlayedfallingSound = true;
                 hasPlayedfallingSound = false;
             }
+        }
+
+        if (other.gameObject.CompareTag("OrangeSphere"))
+        {
+            orangeSphere.attack = true;
         }
 
         if (other.gameObject.CompareTag("RPUpdate"))

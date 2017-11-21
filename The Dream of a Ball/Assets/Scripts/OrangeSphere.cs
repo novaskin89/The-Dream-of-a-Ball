@@ -9,7 +9,8 @@ public class OrangeSphere : MonoBehaviour
     public BarScript boss;
 
     public Transform bossSoul;
-    public float speed = 1f;
+    public float speed = 30f;
+    public bool attack = false;
     // Use this for initialization
     void Start()
     {
@@ -19,9 +20,12 @@ public class OrangeSphere : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, bossSoul.position, step);
+        if (attack == true)
+        {
+            Attack();
+        }
     }
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -29,5 +33,11 @@ public class OrangeSphere : MonoBehaviour
         {
             boss.BossHealth -= 75;
         }
+    }
+
+    void Attack()
+    {
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, bossSoul.position, step);
     }
 }
