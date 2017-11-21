@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class OrangeSphere : MonoBehaviour
 {
-
-    public PlayerController playerController;
     public BarScript boss;
 
     public Transform bossSoul;
@@ -29,6 +27,10 @@ public class OrangeSphere : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            attack = true;
+        }
         if (other.gameObject.CompareTag("BossSoul"))
         {
             boss.BossHealth -= 75;

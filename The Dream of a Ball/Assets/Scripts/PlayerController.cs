@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 
 {
+    public static PlayerController playerController;
 
     public Rigidbody rb;
     public float speed;
@@ -15,7 +16,6 @@ public class PlayerController : MonoBehaviour
     public int lives;
     [Header("Health Settings")] public int health;
     public GameObject Player;
-    public OrangeSphere orangeSphere;
     public Color fullHealth;
     public Color midHealth;
     public Color lowHealth;
@@ -39,10 +39,15 @@ public class PlayerController : MonoBehaviour
     public AudioClip deathSound;
     public Transform pauseCanvas;
 
+    private void Awake()
+    {
+        playerController = this;
+    }
 
     // Use this for initialization
     void Start()
     {
+        Time.timeScale = 1;
         rb = GetComponent<Rigidbody>();
         health = 3;
         lives = 1;
@@ -57,6 +62,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //cheat code
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            health = 0;
+            lives = 0;
+        }
+
         switch (health)
         {
             case 3:
@@ -189,11 +201,6 @@ public class PlayerController : MonoBehaviour
                 hasPlayedfallingSound = true;
                 hasPlayedfallingSound = false;
             }
-        }
-
-        if (other.gameObject.CompareTag("OrangeSphere"))
-        {
-            orangeSphere.attack = true;
         }
 
         if (other.gameObject.CompareTag("RPUpdate"))

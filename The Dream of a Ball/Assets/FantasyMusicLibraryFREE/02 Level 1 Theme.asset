@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: 02 Level 1 Theme
   m_EditorClassIdentifier: 
   volume: 1
-  pitch: 1
+  pitch: 1.5
   audioClip: {fileID: 8300000, guid: aacdb3abc15de450d8cd6dcb506a1e9a, type: 3}
   introBoundary: 40.171
   loopingBoundary: 110

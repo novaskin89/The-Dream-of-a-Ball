@@ -54,26 +54,10 @@ public class GameOverMenu : MonoBehaviour
 
     // all below is meant to restart level
     public void RestartScene()    // se il player fa restart game voglio che la musica si ferma
-    {
-        Time.timeScale = 1;
-        LoadPreviousScene();
+    {       
+        Scene thisScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(thisScene.name);
     }
 
-    public void LoadPreviousScene()
-    {
-        if (SceneManager.GetActiveScene().buildIndex > 0)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-        }
-        else RestartScene();
-    }
-
-    public void LoadNextScene()
-    {
-        if ((SceneManager.GetActiveScene().buildIndex + 1) < SceneManager.sceneCount)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-        else RestartScene();
-    }
+    
 }

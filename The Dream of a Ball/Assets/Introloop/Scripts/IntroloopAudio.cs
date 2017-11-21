@@ -39,14 +39,15 @@ public class IntroloopAudio : ScriptableObject
 	internal float Pitch {
 		get {
 			return this.pitch;
-		}
-	}
+        }
+    }
 	
     internal float IntroLength
     {
         get{
             return introBoundary/pitch;
         }
+      
     }
 
     internal float LoopingLength

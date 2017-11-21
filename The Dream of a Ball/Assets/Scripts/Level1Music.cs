@@ -21,6 +21,7 @@ public class Level1Music : MonoBehaviour
             //se il bool diventa vero la musica si ferma (cioè quando si chiama il restart game dal 
             //gameover menu, questo bool è chiamato dallo script gameovermenu
             IntroloopPlayer.Instance.Stop();
+
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Meteor : MonoBehaviour
 {
-    public GameObject explosionRadius;
+    public ParticleSystem fireExplosion;
 
 	// Use this for initialization
 	void Start ()
@@ -17,12 +17,29 @@ public class Meteor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == "Player")
+        {
+            PlayerController.playerController.health--;
+        }
+
         if (other.tag == "BossPlane")
         {
-            explosionRadius.SetActive(true);
-            Destroy(gameObject);
-            Destroy(explosionRadius);
-
+            StartCoroutine("Explode");
         }
+    }
+
+    IEnumerator Explode()
+    {
+        fireExplosion.Play();
+        fireExplosion.gameObject.transform.parent = null;
+        yield return new WaitForSeconds(1.5f);
+        Destroy(gameObject);
+
+        // find child:
+        //Transform childOfObject = gameObject.transform.GetChild(0);
+        // find parent of child:
+        //Transform parentOfObject = gameObject.transform.parent;
+        // assign child to parent
+        //childOfObject.parent = parentOfObject;
     }
 }
