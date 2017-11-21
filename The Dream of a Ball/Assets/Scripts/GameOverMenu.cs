@@ -16,7 +16,7 @@ public class GameOverMenu : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        IntroloopPlayer.Instance.Play(level1IntroLoop);  // quando il gioco inizia parte la musica
+   
     }
 
     // Update is called once per frame
@@ -49,14 +49,14 @@ public class GameOverMenu : MonoBehaviour
     public void Exit(string MainMenu)
     {
         SceneManager.LoadScene("MainMenu");
+        
     }
 
     // all below is meant to restart level
     public void RestartScene()    // se il player fa restart game voglio che la musica si ferma
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        stopToPlay = true;  //quindi metto il bool dello script della musica su vero in modo che la fermi
+        LoadPreviousScene();
     }
 
     public void LoadPreviousScene()
