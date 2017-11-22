@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 1;
         rb = GetComponent<Rigidbody>();
         health = 3;
-        lives = 1;
+        lives = 3;
         count = PlayerPrefs.GetInt("PickUpCollected");
         lives = PlayerPrefs.GetInt("livesLeft");
         health = PlayerPrefs.GetInt("healthLeft");
@@ -67,6 +67,16 @@ public class PlayerController : MonoBehaviour
         {
             health = 0;
             lives = 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            lives = lives + 1;
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            health = health + 1;
         }
 
         switch (health)
@@ -181,6 +191,14 @@ public class PlayerController : MonoBehaviour
                 yield return new WaitForSeconds(1);  // wait until unpausing damage
                 invulnerable = false;                     // unpause damage 
             }
+
+            if (other.gameObject.CompareTag("BossSoul2"))
+            {
+                health = health - 1;
+                invulnerable = true;
+                yield return new WaitForSeconds(1);  // wait until unpausing damage
+                invulnerable = false;                     // unpause damage 
+            }
         }
 
         if (other.gameObject.CompareTag("DeathTrigger"))
@@ -269,6 +287,17 @@ public class PlayerController : MonoBehaviour
 
         // If the object we hit is the Enemy
         if (c.gameObject.tag == "Enemy")
+        {
+            // Calculate Angle Between the collision point and the p2\2layer
+            Vector3 dir = c.contacts[0].point - transform.position;
+            // We then get the opposite (-Vector3) and normalize it
+            dir = -dir.normalized;
+            // And finally we add force in the direction of dir and multiply it by force. 
+            // This will push back the player
+            GetComponent<Rigidbody>().AddForce(dir * force);
+        }
+
+        if (c.gameObject.tag == "BossSoul2")
         {
             // Calculate Angle Between the collision point and the p2\2layer
             Vector3 dir = c.contacts[0].point - transform.position;

@@ -17,14 +17,15 @@ public class Meteor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
-        {
-            PlayerController.playerController.health--;
-        }
-
         if (other.tag == "BossPlane")
         {
             StartCoroutine("Explode");
+        }
+
+        if (other.tag == "DestroyMeteor")
+        {
+            StartCoroutine("Explode");
+            Destroy(gameObject);
         }
     }
 

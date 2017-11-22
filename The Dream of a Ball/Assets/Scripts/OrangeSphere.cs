@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OrangeSphere : MonoBehaviour
 {
-    public BarScript boss;
+    public Boss boss;
 
     public Transform bossSoul;
     public float speed = 30f;
@@ -33,7 +33,7 @@ public class OrangeSphere : MonoBehaviour
         }
         if (other.gameObject.CompareTag("BossSoul"))
         {
-            boss.BossHealth -= 75;
+            boss.BossHealth -= 10;
         }
     }
 

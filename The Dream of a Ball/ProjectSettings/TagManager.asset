@@ -14,6 +14,8 @@ TagManager:
   - BossSoul
   - BossPlane
   - OrangeSphere
+  - BossSoul2
+  - DestroyMeteor
   layers:
   - Default
   - TransparentFX

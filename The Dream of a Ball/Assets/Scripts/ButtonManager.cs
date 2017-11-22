@@ -28,7 +28,7 @@ public class ButtonManager : MonoBehaviour
     public void NewGameButton(string Level1)
     {
         PlayerPrefs.SetInt("PickUpCollected", 0);
-        PlayerPrefs.SetInt("livesLeft", 1);
+        PlayerPrefs.SetInt("livesLeft", 3);
         PlayerPrefs.SetInt("healthLeft", 3);
         SceneManager.LoadScene(Level1);
         stopPlay = true;
