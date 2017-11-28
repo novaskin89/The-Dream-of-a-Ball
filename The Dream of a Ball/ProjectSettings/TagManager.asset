@@ -16,6 +16,9 @@ TagManager:
   - OrangeSphere
   - BossSoul2
   - DestroyMeteor
+  - Null
+  - DoorTrigger1
+  - DoorTrigger2
   layers:
   - Default
   - TransparentFX

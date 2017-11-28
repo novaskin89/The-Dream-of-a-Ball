@@ -7,12 +7,15 @@ public class PlayerController : MonoBehaviour
 
 {
     public static PlayerController playerController;
-
+    public OpenGate opengate;
+    public OpenGate2 opengate2;
+    public OpenGate2 opengate3;
     public Rigidbody rb;
     public float speed;
     public Text PickUpText;
     public Text LivesText;
-    [HideInInspector] public int count;
+    //[HideInInspector]
+    public int count;
     public int lives;
     [Header("Health Settings")] public int health;
     public GameObject Player;
@@ -219,6 +222,17 @@ public class PlayerController : MonoBehaviour
                 hasPlayedfallingSound = true;
                 hasPlayedfallingSound = false;
             }
+        }
+
+        if (other.gameObject.CompareTag("DoorTrigger1"))
+        {
+            opengate.trigger = true;
+        }
+
+        if (other.gameObject.CompareTag("DoorTrigger2"))
+        {
+            opengate2.trigger = true;
+            opengate3.trigger = true;
         }
 
         if (other.gameObject.CompareTag("RPUpdate"))
