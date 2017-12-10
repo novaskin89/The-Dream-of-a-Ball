@@ -6,7 +6,10 @@ public class Level1Music : MonoBehaviour
 {
 
     public IntroloopAudio level1IntroLoop;
+    public IntroloopAudio bossIntroLoop;
+    public GameObject BossTrigger;
     public bool stopPlay = false;
+    public bool bossTrigger = false;
     // Use this for initialization
     void Start()
     {
@@ -22,6 +25,12 @@ public class Level1Music : MonoBehaviour
             //gameover menu, questo bool è chiamato dallo script gameovermenu
             IntroloopPlayer.Instance.Stop();
 
+        }
+
+        if (bossTrigger == true)
+        {
+            IntroloopPlayer.Instance.Stop();
+            IntroloopPlayer.Instance.Play(bossIntroLoop);  // quando il gioco inizia parte la musica
         }
     }
 }

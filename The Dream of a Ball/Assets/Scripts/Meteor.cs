@@ -5,12 +5,14 @@ using UnityEngine;
 public class Meteor : MonoBehaviour
 {
     public ParticleSystem fireExplosion;
-
-	// Use this for initialization
-	void Start ()
+    public GameObject fireball;
+    public Rigidbody rb;
+    public Renderer rend;
+    // Use this for initialization
+    void Start ()
     {
-		
-	}
+        rend = GetComponent<Renderer>();
+    }
 	
 	// Update is called once per frame
 	
@@ -22,17 +24,19 @@ public class Meteor : MonoBehaviour
             StartCoroutine("Explode");
         }
 
-        if (other.tag == "DestroyMeteor")
-        {
-            StartCoroutine("Explode");
-            Destroy(gameObject);
-        }
+        //if (other.tag == "DestroyMeteor")
+        //{
+        //    StartCoroutine("Explode");
+        //    Destroy(gameObject);
+        //}
     }
 
     IEnumerator Explode()
     {
+        rend.enabled = false;
+        rb.isKinematic = true;
         fireExplosion.Play();
-        fireExplosion.gameObject.transform.parent = null;
+        //fireExplosion.gameObject.transform.parent = null;
         yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);
 

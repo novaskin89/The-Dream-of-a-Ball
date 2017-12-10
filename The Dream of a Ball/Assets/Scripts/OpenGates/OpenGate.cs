@@ -11,7 +11,7 @@ public class OpenGate : MonoBehaviour
     public GameObject text;
     public GameObject image;
     public bool trigger = false;
-
+    public bool trigger2 = false;
     // Use this for initialization
     void Start()
     {

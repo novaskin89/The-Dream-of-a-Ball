@@ -19,6 +19,7 @@ TagManager:
   - Null
   - DoorTrigger1
   - DoorTrigger2
+  - health
   layers:
   - Default
   - TransparentFX

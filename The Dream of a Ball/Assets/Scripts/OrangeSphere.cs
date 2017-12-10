@@ -32,7 +32,7 @@ public class OrangeSphere : MonoBehaviour
         }
         if (other.gameObject.CompareTag("BossSoul"))
         {
-            boss.BossHealth -= 10;
+            boss.BossHealth -= 1;
         }
     }
 

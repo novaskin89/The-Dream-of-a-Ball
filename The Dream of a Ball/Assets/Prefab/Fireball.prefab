@@ -329,6 +329,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireExplosion: {fileID: 198843588285032114}
+  fireball: {fileID: 1636691265100880}
+  rb: {fileID: 54868476763302472}
+  rend: {fileID: 23050128460010924}
 --- !u!135 &135691909405691562
 SphereCollider:
   m_ObjectHideFlags: 1

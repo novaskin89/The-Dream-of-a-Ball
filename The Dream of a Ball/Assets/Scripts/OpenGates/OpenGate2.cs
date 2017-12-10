@@ -7,7 +7,13 @@ public class OpenGate2 : MonoBehaviour
 {
     public bool trigger = false;
     public Transform OpenedClosedPosition;
+    public Transform OpenedClosedPosition2;
     public float speed;
+    public GameObject gateA;
+    public GameObject meteorSpawner;
+    public GameObject preBossArea;
+    public GameObject MovingFan;
+
     // Use this for initialization
     void Start()
     {
@@ -26,6 +32,9 @@ public class OpenGate2 : MonoBehaviour
     {
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, OpenedClosedPosition.position, step);
+        gateA.transform.position = Vector3.MoveTowards(transform.position, OpenedClosedPosition.position, step);
+        preBossArea.SetActive(true);
+        MovingFan.SetActive(true);
     }
 
 }
