@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public int lives;
     [Header("Health Settings")] public int health;
     public GameObject Player;
+    public GameObject bossMusicTrigger;
     public Color fullHealth;
     public Color midHealth;
     public Color lowHealth;
@@ -28,6 +29,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform respawnPoint2;
     [SerializeField] private Transform respawnPoint3;
     [SerializeField] private Transform respawnPoint4;
+    [SerializeField] private Transform respawnPoint5;
+    [SerializeField] private Transform respawnPoint6;
+    [SerializeField] private Transform respawnPoint7;
     [SerializeField] private Transform PlayerTransform;
     bool hasPlayed2Hp = false;
     bool hasPlayed1Hp = false;
@@ -199,163 +203,195 @@ public class PlayerController : MonoBehaviour
         }
 
         if (!invulnerable)
+        {
+            if (other.gameObject.CompareTag("Enemy"))
             {
-                if (other.gameObject.CompareTag("Enemy"))
-                {
-                    health = health - 1;
-                    invulnerable = true;
-                    yield return new WaitForSeconds(1);  // wait until unpausing damage
-                    invulnerable = false;                     // unpause damage 
-                }
-
-                if (other.gameObject.CompareTag("BossSoul2"))
-                {
-                    health = health - 1;
-                    invulnerable = true;
-                    yield return new WaitForSeconds(1);  // wait until unpausing damage
-                    invulnerable = false;                     // unpause damage 
-                }
+                health = health - 1;
+                invulnerable = true;
+                yield return new WaitForSeconds(1);  // wait until unpausing damage
+                invulnerable = false;                     // unpause damage 
             }
 
-            if (other.gameObject.CompareTag("DeathTrigger"))
+            if (other.gameObject.CompareTag("BossSoul2"))
             {
-                SetLivesText();
-                health = 3;
-                DisableRagdoll();
-                Invoke("PlayerRespawn", 0.5f);
-            }
-
-            if (other.gameObject.CompareTag("FallingTrigger"))
-            {
-                if (hasPlayedfallingSound == false)
-                {
-                    AudioSource audio = GetComponent<AudioSource>();
-                    audio.clip = fallingBall;
-                    audio.Play();
-                    hasPlayedfallingSound = true;
-                    hasPlayedfallingSound = false;
-                }
-            }
-
-            if (other.gameObject.CompareTag("DoorTrigger1"))
-            {
-                opengate.trigger = true;
-            }
-
-            if (other.gameObject.CompareTag("DoorTrigger2"))
-            {
-                opengate3.trigger = true;
-                opengate2.trigger = true;
-            }
-
-            if (other.gameObject.CompareTag("RPUpdate"))
-            {
-                respawnPoint.transform.position = respawnPoint2.transform.position;
-            }
-
-            if (other.gameObject.CompareTag("RPUpdate2"))
-            {
-                respawnPoint.transform.position = respawnPoint3.transform.position;
-            }
-
-            if (other.gameObject.CompareTag("RPUpdate3"))
-            {
-                respawnPoint.transform.position = respawnPoint4.transform.position;
+                health = health - 1;
+                invulnerable = true;
+                yield return new WaitForSeconds(1);  // wait until unpausing damage
+                invulnerable = false;                     // unpause damage 
             }
         }
 
-        void SetPickUpText()
+        if (other.gameObject.CompareTag("DeathTrigger"))
         {
-            PickUpText.text = "PickUp: " + count.ToString() + "/100";
-        }
-
-        void SetLivesText()
-        {
-            LivesText.text = "Lives: " + lives.ToString();
-        }
-
-        void Damagesound2Hp()
-        {
-            if (hasPlayed2Hp == false)
-            {
-                AudioSource audio = GetComponent<AudioSource>();
-                audio.clip = damageSound;
-                audio.Play();
-                hasPlayed2Hp = true;
-            }
-        }
-
-        void Damagesound1Hp()
-        {
-            if (hasPlayed1Hp == false)
-            {
-                AudioSource audio = GetComponent<AudioSource>();
-                audio.clip = damageSound;
-                audio.Play();
-                hasPlayed1Hp = true;
-            }
-        }
-
-        void DieSound()
-        {
-            if (hasPlayeddeath == false)
-            {
-                AudioSource audio = GetComponent<AudioSource>();
-                audio.clip = deathSound;
-                audio.Play();
-                hasPlayeddeath = true;
-                hasPlayeddeath = false;
-            }
-        }
-        void OnCollisionEnter(Collision c)
-        {
-            // force is how forcefully we will push the player away from the enemy.
-            float force = 400;
-
-            // If the object we hit is the Enemy
-            if (c.gameObject.tag == "Enemy")
-            {
-                // Calculate Angle Between the collision point and the p2\2layer
-                Vector3 dir = c.contacts[0].point - transform.position;
-                // We then get the opposite (-Vector3) and normalize it
-                dir = -dir.normalized;
-                // And finally we add force in the direction of dir and multiply it by force. 
-                // This will push back the player
-                GetComponent<Rigidbody>().AddForce(dir * force);
-            }
-
-            if (c.gameObject.tag == "BossSoul2")
-            {
-                // Calculate Angle Between the collision point and the p2\2layer
-                Vector3 dir = c.contacts[0].point - transform.position;
-                // We then get the opposite (-Vector3) and normalize it
-                dir = -dir.normalized;
-                // And finally we add force in the direction of dir and multiply it by force. 
-                // This will push back the player
-                GetComponent<Rigidbody>().AddForce(dir * force);
-            }
-        }
-
-        void PlayerRespawn()
-        {
-            PlayerTransform.transform.position = respawnPoint.transform.position;
-            health = 3;
-            hasPlayed2Hp = false;
-            hasPlayed1Hp = false;
-            EnableRagdoll();
-            lives = lives - 1;
             SetLivesText();
+            health = 3;
+            DisableRagdoll();
+            Invoke("PlayerRespawn", 0.5f);
         }
 
-        void DisableRagdoll()
+        if (other.gameObject.CompareTag("FallingTrigger"))
         {
-            rb.isKinematic = true;
-            rb.detectCollisions = false;
+            if (hasPlayedfallingSound == false)
+            {
+                AudioSource audio = GetComponent<AudioSource>();
+                audio.clip = fallingBall;
+                audio.Play();
+                hasPlayedfallingSound = true;
+                hasPlayedfallingSound = false;
+            }
         }
 
-        void EnableRagdoll()
+        if (other.gameObject.CompareTag("DoorTrigger1"))
         {
-            rb.isKinematic = false;
-            rb.detectCollisions = true;
+            opengate.trigger = true;
+            level1Music.stopPlay = true;
+        }
+
+        if (other.gameObject.CompareTag("DoorTrigger2"))
+        {
+            opengate3.trigger = true;
+            opengate2.trigger = true;
+        }
+
+        if (other.gameObject.CompareTag("BossMusic"))
+        {
+            level1Music.bossMusicTrigger = true;
+            bossMusicTrigger.SetActive(false);
+        }
+
+        if (other.gameObject.CompareTag("RPUpdate"))
+        {
+            respawnPoint.transform.position = respawnPoint2.transform.position;
+        }
+
+        if (other.gameObject.CompareTag("RPUpdate2"))
+        {
+            respawnPoint.transform.position = respawnPoint3.transform.position;
+        }
+
+        if (other.gameObject.CompareTag("RPUpdate3"))
+        {
+            respawnPoint.transform.position = respawnPoint4.transform.position;
+        }
+
+        if (other.gameObject.CompareTag("RPUpdate4"))
+        {
+            respawnPoint.transform.position = respawnPoint5.transform.position;
+        }
+
+        if (other.gameObject.CompareTag("RPUpdate5"))
+        {
+            respawnPoint.transform.position = respawnPoint6.transform.position;
+        }
+
+        if (other.gameObject.CompareTag("RPUpdate6"))
+        {
+            respawnPoint.transform.position = respawnPoint7.transform.position;
+        }
+
+        if (other.gameObject.CompareTag("DoorTrigger1"))
+        {
+            opengate.trigger = true;
+        }
+
+        if (other.gameObject.CompareTag("DoorTrigger1"))
+        {
+            opengate.trigger = true;
         }
     }
+
+    void SetPickUpText()
+    {
+        PickUpText.text = "PickUp: " + count.ToString() + "/100";
+    }
+
+    void SetLivesText()
+    {
+        LivesText.text = "Lives: " + lives.ToString();
+    }
+
+    void Damagesound2Hp()
+    {
+        if (hasPlayed2Hp == false)
+        {
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.clip = damageSound;
+            audio.Play();
+            hasPlayed2Hp = true;
+        }
+    }
+
+    void Damagesound1Hp()
+    {
+        if (hasPlayed1Hp == false)
+        {
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.clip = damageSound;
+            audio.Play();
+            hasPlayed1Hp = true;
+        }
+    }
+
+    void DieSound()
+    {
+        if (hasPlayeddeath == false)
+        {
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.clip = deathSound;
+            audio.Play();
+            hasPlayeddeath = true;
+            hasPlayeddeath = false;
+        }
+    }
+    void OnCollisionEnter(Collision c)
+    {
+        // force is how forcefully we will push the player away from the enemy.
+        float force = 400;
+
+        // If the object we hit is the Enemy
+        if (c.gameObject.tag == "Enemy")
+        {
+            // Calculate Angle Between the collision point and the p2\2layer
+            Vector3 dir = c.contacts[0].point - transform.position;
+            // We then get the opposite (-Vector3) and normalize it
+            dir = -dir.normalized;
+            // And finally we add force in the direction of dir and multiply it by force. 
+            // This will push back the player
+            GetComponent<Rigidbody>().AddForce(dir * force);
+        }
+
+        if (c.gameObject.tag == "BossSoul2")
+        {
+            // Calculate Angle Between the collision point and the p2\2layer
+            Vector3 dir = c.contacts[0].point - transform.position;
+            // We then get the opposite (-Vector3) and normalize it
+            dir = -dir.normalized;
+            // And finally we add force in the direction of dir and multiply it by force. 
+            // This will push back the player
+            GetComponent<Rigidbody>().AddForce(dir * force);
+        }
+    }
+
+    void PlayerRespawn()
+    {
+        PlayerTransform.transform.position = respawnPoint.transform.position;
+        health = 3;
+        hasPlayed2Hp = false;
+        hasPlayed1Hp = false;
+        EnableRagdoll();
+        lives = lives - 1;
+        SetLivesText();
+    }
+
+    void DisableRagdoll()
+    {
+        rb.isKinematic = true;
+        rb.detectCollisions = false;
+    }
+
+    void EnableRagdoll()
+    {
+        rb.isKinematic = false;
+        rb.detectCollisions = true;
+    }
+}

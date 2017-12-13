@@ -20,6 +20,11 @@ TagManager:
   - DoorTrigger1
   - DoorTrigger2
   - health
+  - RPUpdate4
+  - RPUpdate5
+  - RPUpdate6
+  - BossMusic
+  - StopMusic
   layers:
   - Default
   - TransparentFX

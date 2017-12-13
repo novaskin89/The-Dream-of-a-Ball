@@ -35,6 +35,7 @@ public class OpenGate2 : MonoBehaviour
         gateA.transform.position = Vector3.MoveTowards(transform.position, OpenedClosedPosition.position, step);
         preBossArea.SetActive(true);
         MovingFan.SetActive(true);
+        meteorSpawner.SetActive(true);
     }
 
 }

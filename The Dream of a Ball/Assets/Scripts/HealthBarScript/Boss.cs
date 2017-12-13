@@ -6,6 +6,7 @@ public class Boss : MonoBehaviour
 {
     [SerializeField] private GameObject boss;
     public GameObject BossArea;
+    public GameObject BossArea2;
     public int BossHealth = 33;
     public int DamageToBoss = 10;
     public Material fullHealth;
@@ -48,6 +49,7 @@ public class Boss : MonoBehaviour
         if (BossHealth == 0)
         {
             BossArea.SetActive(false);
+            BossArea2.SetActive(true);
         }
     }
 }
