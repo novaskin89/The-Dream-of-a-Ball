@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             lives = lives + 1;
+            SetLivesText();
         }
 
         if (Input.GetKeyDown(KeyCode.J))
@@ -161,9 +162,12 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (lives == 0)
+        if (lives == -1)
         {
             gameOver = true;
+            PlayerPrefs.SetInt("PickUpCollected", 0);
+            PlayerPrefs.SetInt("livesLeft", 3);
+            PlayerPrefs.SetInt("healthLeft", 3);
         }
 
         if (Time.timeScale == 1)
@@ -200,6 +204,16 @@ public class PlayerController : MonoBehaviour
                     other.gameObject.SetActive(false);
                 }
             }
+        }
+
+        if (other.gameObject.CompareTag("Live"))
+        {
+            {
+                lives = lives + 1;
+                other.gameObject.SetActive(false);
+                SetLivesText();
+            }
+
         }
 
         if (!invulnerable)
@@ -289,6 +303,11 @@ public class PlayerController : MonoBehaviour
             respawnPoint.transform.position = respawnPoint7.transform.position;
         }
 
+        if (other.gameObject.CompareTag("LockedAtBoss"))
+        {
+            PlayerTransform.transform.position = respawnPoint.transform.position;
+        }
+
         if (other.gameObject.CompareTag("DoorTrigger1"))
         {
             opengate.trigger = true;
@@ -297,17 +316,30 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("DoorTrigger1"))
         {
             opengate.trigger = true;
+        }
+
+        if (other.gameObject.CompareTag("Attractor"))
+        {
+            Physics.gravity = new Vector3(-10, 0, -10);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Attractor"))
+        {
+            Physics.gravity = new Vector3(0, -1, 0);
         }
     }
 
     void SetPickUpText()
     {
-        PickUpText.text = "PickUp: " + count.ToString() + "/100";
+        PickUpText.text = "          : " + count.ToString() + "/100";
     }
 
     void SetLivesText()
     {
-        LivesText.text = "Lives: " + lives.ToString();
+        LivesText.text = "        : " + lives.ToString();
     }
 
     void Damagesound2Hp()
@@ -350,6 +382,17 @@ public class PlayerController : MonoBehaviour
 
         // If the object we hit is the Enemy
         if (c.gameObject.tag == "Enemy")
+        {
+            // Calculate Angle Between the collision point and the p2\2layer
+            Vector3 dir = c.contacts[0].point - transform.position;
+            // We then get the opposite (-Vector3) and normalize it
+            dir = -dir.normalized;
+            // And finally we add force in the direction of dir and multiply it by force. 
+            // This will push back the player
+            GetComponent<Rigidbody>().AddForce(dir * force);
+        }
+
+        if (c.gameObject.tag == "PushingFan")
         {
             // Calculate Angle Between the collision point and the p2\2layer
             Vector3 dir = c.contacts[0].point - transform.position;

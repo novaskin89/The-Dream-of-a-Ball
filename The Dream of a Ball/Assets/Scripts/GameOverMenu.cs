@@ -49,7 +49,6 @@ public class GameOverMenu : MonoBehaviour
     public void Exit(string MainMenu)
     {
         SceneManager.LoadScene("MainMenu");
-        
     }
 
     // all below is meant to restart level

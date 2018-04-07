@@ -16,6 +16,9 @@ public class Shake : MonoBehaviour
     // Amplitude of the shake. A larger value shakes the camera harder.
     public float shakeAmount = 0.7f;
     public float decreaseFactor = 1.0f;
+    public bool shake1 = false;
+    public bool shake2 = false;
+    public bool shake3 = false;
 
     Vector3 originalPos;
 
@@ -34,13 +37,33 @@ public class Shake : MonoBehaviour
 
     void Update()
     {
+        //boss shake
+        if (shake1 == true)
+        {
+            shakeDuration = 1;
+            shake1 = false;
+        }
+
+        if (shake2 == true)
+        {
+            shakeDuration = 1;
+            shake2 = false;
+        }
+
+        if (shake3 == true)
+        {
+            shakeDuration = 1;
+            shake3 = false;
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             shakeDuration = 1;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            shakeDuration = 3;
+            shakeDuration = 2;
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {

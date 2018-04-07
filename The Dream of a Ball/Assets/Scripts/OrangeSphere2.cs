@@ -5,7 +5,6 @@ using UnityEngine;
 public class OrangeSphere2 : MonoBehaviour
 {
     public Boss boss;
-
     public Transform bossSoul;
     public float speed = 30f;
     public bool attack = false;
@@ -23,7 +22,6 @@ public class OrangeSphere2 : MonoBehaviour
             Attack();
         }
     }
-
 
     void OnTriggerEnter(Collider other)
     {

@@ -25,6 +25,11 @@ TagManager:
   - RPUpdate6
   - BossMusic
   - StopMusic
+  - PushingFan
+  - Live
+  - Fire
+  - LockedAtBoss
+  - PlayerDetector
   layers:
   - Default
   - TransparentFX

@@ -36,14 +36,14 @@ public class OpenGate : MonoBehaviour
 
     void OpenDoor()
     {
-        float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, OpenedClosedPosition.position, step);
+        float openingSpeed = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, OpenedClosedPosition.position, openingSpeed);
     }
 
     void OpenDoor2()
     {
-        float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, OpenedClosedPosition.position, step);
+        float openingSpeed = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, OpenedClosedPosition.position, openingSpeed);
     }
 }
 

@@ -5,7 +5,6 @@ using UnityEngine;
 public class OrangeSphere3 : MonoBehaviour
 {
     public Boss boss;
-
     public Transform bossSoul;
     public float speed = 30f;
     public bool attack = false;
